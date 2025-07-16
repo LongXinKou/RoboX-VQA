@@ -25,7 +25,26 @@ Simulated data serves as a **complementary resource** to real-world datasets by 
 
 
 ## Data Prepraring
-### Raw Dataset
+### Real-World Dataset
+1. First of all, download raw RLDS datasets from [Open X-Embodiment](https://console.cloud.google.com/storage/browser/gresearch/robotics) using gsutil tool.
+
+```bash
+conda install gsutil
+gsutil -m cp -r gs://gresearch/robotics/<dataset_name> <path_to_your_target_dir>
+```
+
+2. Then read RLDS format datasets and extract video sequences with annotations.
+```bash
+# Basic Usage
+python RLDS_reader.py --dataset bridge_data_v2
+
+# Custom Output Directory
+python RLDS_reader.py --dataset bridge_data_v2 --output-dir /path/to/output
+
+# List Available Datasets
+python RLDS_reader.py --list-datasets
+```
+
 
 ### Meta-Information
 We leverages GPT-4o’s capabilities to automatically generate comprehensive question-answer pairs from text meta-information, 
