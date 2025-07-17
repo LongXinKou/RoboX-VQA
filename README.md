@@ -37,13 +37,13 @@ gsutil -m cp -r gs://gresearch/robotics/<dataset_name> <path_to_your_target_dir>
 
 ```bash
 # Basic Usage
-python RLDS_reader.py --dataset bridge_data_v2
+python scripts/RLDS_reader.py --dataset bridge_data_v2
 
 # Custom Output Directory
-python RLDS_reader.py --dataset bridge_data_v2 --output-dir /path/to/output
+python scripts/RLDS_reader.py --dataset bridge_data_v2 --output-dir /path/to/output
 
 # List Available Datasets
-python RLDS_reader.py --list-datasets
+python scripts/RLDS_reader.py --list-datasets
 ```
 
 The generated directory structure shows as below:
