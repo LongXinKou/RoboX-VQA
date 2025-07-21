@@ -59,39 +59,32 @@ dataset_name/
 ```
 
 ### Meta-Information
-We leverages GPT-4o’s capabilities to automatically generate comprehensive question-answer pairs from text meta-information, 
-the **dual-source meta-information** provides rich contextual data for QA generation.
 
 ![meta_information](./images/meta_information.png)
 
 ### Automatic QA Generation
+
+We leverages GPT-4o’s capabilities to automatically generate comprehensive question-answer pairs from text meta-information, 
+the **dual-source meta-information** provides rich contextual data for QA generation.
+
 ```
-Your task is to compare the predicted answer with the correct answer and determine if they match meaningfully. Here’s
-how you can accomplish the task:
-——
-##INSTRUCTIONS:
-- Focus on the meaningful match between the predicted answer and the correct answer.
-- Consider synonyms or paraphrases as valid matches.
-- Evaluate the correctness of the prediction compared to the answer.
-Please evaluate the following video-based question-answer pair:
-Question: question
-Correct Answer: answer
-Predicted Answer: pred
-Provide your evaluation only as a yes/no and score where the score is an integer value between 0 and 5, with 5 indicating
-the highest meaningful match. Consider the following guidelines:
-1. Minor differences in object descriptions should not necessarily result in a negative evaluation if the overall action is
-correct.
-2. Consider the potential for slight misinterpretations in visual details, especially for similar objects or surfaces.
-Please generate the response in the form of a Python dictionary string with keys ’pred’ and ’score’, where value of ’pred’
-is a string of ’yes’ or ’no’ and value of ’score’ is in INTEGER, not STRING.
-DO NOT PROVIDE ANY OTHER OUTPUT TEXT OR EXPLANATION. Only provide the Python dictionary string.
+Please ask a question for {Q_type} based on the video. Then you need to give the answer. 
+
+Video Content: {input} 
+
+# The video depicts a robot performing tasks on a tabletop.
+# Only describe what you are certain about, and avoid providing descriptions that may be ambiguous or inaccurate.
+# Your response must be in JSON format, with the keys question and answer, like this: {{question: your question here, answer: your answer here}}.
 ```
+
 Our prompt engineering follows a structured approach with several key components: 
 - **Meta-Information Integration**: Each prompt begins by providing the available meta-information as context, ensuring GPT-4o has access to the details of the demonstration.  
 - **Task Type Specification**: The prompt explicitly defines the type of understanding to be probed. 
 - **Question Format Guidelines**: We provide clear instructions on question formatting. 
 - **Answer Constraint Specifications**: To maintain evaluation consistency, we define answer format requirements tailored to 
 each question type.
+
+
 
 ## Data Format 
 
