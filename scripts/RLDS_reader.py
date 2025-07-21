@@ -19,9 +19,9 @@ import tensorflow_datasets as tfds
 from tqdm import tqdm
 
 try:
-    from .utils import save_video, generate_meta_information
+    from .utils import save_video, generate_meta_information, dataset_mapping
 except ImportError:
-    from scripts.utils import save_video, generate_meta_information
+    from scripts.utils import save_video, generate_meta_information, dataset_mapping
 
 
 # Configure logging
@@ -30,24 +30,6 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
-
-def dataset_mapping(base_dir):
-    Dataset_Path_Mapping = {
-        "bc_z": f"{base_dir}/bc_z/0.1.0",
-        "berkeley_autolab_ur5": f"{base_dir}/berkeley_autolab_ur5/0.1.0/",
-        "bridge": f"{base_dir}/bridge/0.1.0/",
-        "bridge_data_v2": f"{base_dir}/bridge_data_v2/0.0.1/",
-        "droid": f"{base_dir}/droid/1.0.0",
-        "fractal20220817_data": f"{base_dir}/fractal20220817_data/0.1.0",
-        "jaco_play": f"{base_dir}/jaco_play/0.1.0/",
-        "robo_set": f"{base_dir}/robo_set/0.0.1/",
-        "ucsd_kitchen_dataset_converted_externally_to_rlds": f"{base_dir}/ucsd_kitchen_dataset_converted_externally_to_rlds/0.1.0",
-        "utokyo_xarm_bimanual_converted_externally_to_rlds": f"{base_dir}/utokyo_xarm_bimanual_converted_externally_to_rlds/0.1.0/",
-        "utokyo_xarm_pick_and_place_converted_externally_to_rlds": f"{base_dir}/utokyo_xarm_pick_and_place_converted_externally_to_rlds/0.1.0/",
-        "viola": f"{base_dir}/viola/0.1.0/",
-        "stanford_hydra_dataset_converted_externally_to_rlds": f"{base_dir}/stanford_hydra_dataset_converted_externally_to_rlds/0.1.0/",
-    }
-    return Dataset_Path_Mapping
 
 class RLDSDatasetExtractor:
     IMAGE_KEYS = {
