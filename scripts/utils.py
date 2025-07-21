@@ -5,6 +5,93 @@ from PIL import Image
 import imageio
 from typing import List, Tuple, Dict, Any
 
+# QA Generation Utilities
+def dataset_mapping(base_dir):
+    Dataset_Path_Mapping = {
+        "bc_z": f"{base_dir}/bc_z/0.1.0",
+        "berkeley_autolab_ur5": f"{base_dir}/berkeley_autolab_ur5/0.1.0/",
+        "bridge": f"{base_dir}/bridge/0.1.0/",
+        "bridge_data_v2": f"{base_dir}/bridge_data_v2/0.0.1/",
+        "droid": f"{base_dir}/droid/1.0.0",
+        "fractal20220817_data": f"{base_dir}/fractal20220817_data/0.1.0",
+        "jaco_play": f"{base_dir}/jaco_play/0.1.0/",
+        "robo_set": f"{base_dir}/robo_set/0.0.1/",
+        "ucsd_kitchen_dataset_converted_externally_to_rlds": f"{base_dir}/ucsd_kitchen_dataset_converted_externally_to_rlds/0.1.0",
+        "utokyo_xarm_bimanual_converted_externally_to_rlds": f"{base_dir}/utokyo_xarm_bimanual_converted_externally_to_rlds/0.1.0/",
+        "utokyo_xarm_pick_and_place_converted_externally_to_rlds": f"{base_dir}/utokyo_xarm_pick_and_place_converted_externally_to_rlds/0.1.0/",
+
+        "viola": f"{base_dir}/viola/0.1.0/",
+        "stanford_hydra_dataset_converted_externally_to_rlds": f"{base_dir}/stanford_hydra_dataset_converted_externally_to_rlds/0.1.0/",
+
+        "libero_spatial_no_noops": f"{base_dir}/libero_spatial_no_noops/1.0.0",
+        "libero_goal_no_noops": f"{base_dir}/libero_goal_no_noops/1.0.0",
+        "libero_object_no_noops": f"{base_dir}/libero_object_no_noops/1.0.0",
+        "libero_10_no_noops": f"{base_dir}/libero_10_no_noops/1.0.0",
+
+        # long horizon
+        "calvin": f"{base_dir}/calvin/1.0.0",
+        "franka_kitchen": f"{base_dir}/franka_kitchen/1.0.0",
+        "bridge_data_v2_combine": f"{base_dir}/bridge_v2_release/raw/bridge_data_v2/",
+        "bridge_data_v2_combine_rss": f"{base_dir}/bridge_v2_release/raw/rss/",
+
+        "bridge_task": f"{base_dir}/bridge/0.1.0/",
+        "bridge_data_v2_task": f"{base_dir}/bridge_data_v2/0.0.1/",
+        "bridge_data_v2_combine_task": f"{base_dir}/bridge_v2_release/raw/bridge_data_v2/",
+        "bridge_data_v2_combine_rss_task": f"{base_dir}/bridge_v2_release/raw/rss/",
+
+        # "taco_play": f"{base_dir}/taco_play/0.1.0/",
+        # "taco_play_task": f"{base_dir}/taco_play/0.1.0/",
+        "robot_vqa": f"{base_dir}/robot_vqa/0.1.0/",
+    }
+
+    Dataset_Task_Mapping = {
+        "bc_z": ["Video Caption", "Action Identification", "Object Identification", "Spatial Relationship"],
+        "berkeley_autolab_ur5": ["Video Caption", "Action Identification", "Object Identification",
+                                 "Spatial Relationship"],
+        "bridge": ["Video Caption", "Action Identification", "Object Identification", "Spatial Relationship"],
+        "bridge_data_v2": ["Video Caption", "Action Identification", "Object Identification", "Spatial Relationship"],
+        "droid": ["Video Caption", "Action Identification", "Object Identification", "Spatial Relationship"],
+        "fractal20220817_data": ["Video Caption", "Action Identification", "Object Identification",
+                                 "Spatial Relationship"],
+        "jaco_play": ["Video Caption", "Action Identification", "Object Identification", "Spatial Relationship"],
+        "robo_set": ["Video Caption", "Action Identification", "Object Identification", "Spatial Relationship"],
+        "ucsd_kitchen_dataset_converted_externally_to_rlds": ["Video Caption", "Action Identification",
+                                                              "Object Identification", "Spatial Relationship"],
+        "utokyo_xarm_bimanual_converted_externally_to_rlds": ["Video Caption", "Action Identification",
+                                                              "Object Identification", "Spatial Relationship"],
+        "utokyo_xarm_pick_and_place_converted_externally_to_rlds": ["Video Caption", "Action Identification",
+                                                                    "Object Identification", "Spatial Relationship"],
+
+        "libero_spatial_no_noops": ["Video Caption", "Action Identification", "Object Identification",
+                                    "Spatial Relationship"],
+        "libero_goal_no_noops": ["Video Caption", "Action Identification", "Object Identification",
+                                 "Spatial Relationship"],
+        "libero_10_no_noops": ["Video Caption", "Action Identification", "Object Identification",
+                               "Spatial Relationship"],
+
+        "calvin": ["Action Identification", "Object Identification", "Spatial Relationship", "Action Ordering",
+                   "Action Temporal Localization", "Action Segment Summarization",
+                   "Action Segmentation and Summarization"],
+        "franka_kitchen": ["Action Identification", "Object Identification", "Spatial Relationship", "Action Ordering",
+                           "Action Temporal Localization", "Action Segment Summarization",
+                           "Action Segmentation and Summarization"],
+        "bridge_data_v2_combine": ["Action Identification", "Object Identification", "Spatial Relationship",
+                                   "Action Ordering", "Action Temporal Localization", "Action Segment Summarization",
+                                   "Action Segmentation and Summarization"],
+        "bridge_data_v2_combine_rss": ["Action Identification", "Object Identification", "Spatial Relationship",
+                                       "Action Ordering", "Action Temporal Localization",
+                                       "Action Segment Summarization", "Action Segmentation and Summarization"],
+
+        "bridge_task": ["Task Success Detection"],
+        "bridge_data_v2_task": ["Task Success Detection"],
+        "bridge_data_v2_combine_task": ["Task Success Detection", "Task Planning"],
+        "bridge_data_v2_combine_rss_task": ["Task Success Detection", "Task Planning"],
+
+    }
+    return Dataset_Path_Mapping, Dataset_Task_Mapping
+
+
+# Read&Write Video/Image Utilities
 def read_video_decord(video_path: str) -> List[np.ndarray]:
     vr = VideoReader(video_path)
     frames = [frame.asnumpy() for frame in vr]
