@@ -217,7 +217,7 @@ def main():
     parser.add_argument(
         '--base-path',
         type=str,
-        default='/ephemeral/nf/robot_dataset/',
+        default='',
         help='Base directory containing RLDS datasets'
     )
     parser.add_argument(
